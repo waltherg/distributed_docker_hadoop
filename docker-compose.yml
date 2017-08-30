@@ -1,0 +1,89 @@
+version: '3.3'
+services:
+
+  base:
+    build:
+      context: ./images/base
+      dockerfile: Dockerfile
+      args:
+        hadoop_version: ${hadoop_version}
+        hadoop_root: ${hadoop_root}
+        hadoop_mirror: ${hadoop_mirror}
+    image: distributed_docker_hadoop:${image_version}
+
+  name-node:
+    image: distributed_docker_hadoop:${image_version}
+    networks:
+      - hadoop_net
+    command: >
+      bash -c '
+        yes | ${hadoop_root}/hadoop-${hadoop_version}/bin/hdfs namenode -format &&
+        ${hadoop_root}/hadoop-${hadoop_version}/bin/hdfs namenode
+      '
+    ports:
+      - "50070:50070"
+    depends_on:
+      - base
+
+  data-node:
+    image: distributed_docker_hadoop:${image_version}
+    networks:
+      - hadoop_net
+    command: >
+      bash -c '
+        ${hadoop_root}/hadoop-${hadoop_version}/bin/hdfs datanode
+      '
+    depends_on:
+      - base
+
+  resource-manager:
+    image: distributed_docker_hadoop:${image_version}
+    networks:
+      - hadoop_net
+    command: >
+      bash -c '
+        ${hadoop_root}/hadoop-${hadoop_version}/bin/yarn resourcemanager
+      '
+    ports:
+      - "8088:8088"
+    depends_on:
+      - base
+
+  node-manager:
+    image: distributed_docker_hadoop:${image_version}
+    networks:
+      - hadoop_net
+    command: >
+      bash -c '
+        ${hadoop_root}/hadoop-${hadoop_version}/bin/yarn nodemanager
+      '
+    depends_on:
+      - base
+
+  web-app-proxy:
+    image: distributed_docker_hadoop:${image_version}
+    networks:
+      - hadoop_net
+    command: >
+      bash -c '
+        ${hadoop_root}/hadoop-${hadoop_version}/bin/yarn proxyserver
+      '
+    depends_on:
+      - base
+
+  map-reduce-job-history:
+    image: distributed_docker_hadoop:${image_version}
+    networks:
+      - hadoop_net
+    command: >
+      bash -c '
+        ${hadoop_root}/hadoop-${hadoop_version}/bin/mapred historyserver
+      '
+    ports:
+      - "19888:19888"
+    depends_on:
+      - base
+
+networks:
+  hadoop_net:
+    driver: bridge
