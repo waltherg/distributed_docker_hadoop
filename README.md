@@ -2,6 +2,13 @@
 
 This repository demonstrates how to spin up a distributed Hadoop system.
 
+* [Prerequisites](#prerequisites)
+* [Setup](#setup)
+  * [Build Docker image:](#build-docker-image)
+  * [Start cluster:](#start-cluster)
+  * [Scaling out:](#scaling-out)
+* [Moving to multiple hosts](#moving-to-multiple-hosts)
+
 ## Prerequisites
 
 Ensure you have Python Anaconda (the Python 3.6 flavor) installed: https://www.anaconda.com/download/.
