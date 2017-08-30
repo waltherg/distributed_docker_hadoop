@@ -86,3 +86,17 @@ Back in the name node web interface you should now notice two data nodes:
 Hostnames are not allowed to contain underscores `_`, therefore make certain
 to spell out longer hostnames with dashes `-` instead.
 In this example we ensure this by using dashes in the names of our Docker services.
+
+### Moving to multiple hosts
+
+It should be relatively simple to scale out our test cluster to multiple hosts.
+Here is a sketch of steps that are likely to get you closer to running this on multiple hosts:
+
+* Create a [Docker swarm](https://docs.docker.com/engine/swarm/)
+* Instead of the current Docker bridge network use an
+  [overlay network](https://docs.docker.com/engine/userguide/networking/get-started-overlay/)
+* Add an [OpenVPN server container](https://github.com/kylemanna/docker-openvpn) to your
+  Docker overlay network to grant you continued web interface access from your computer
+* You would likely want to use an orchestration framework such as
+  [Ansible](https://www.ansible.com/) to tie the different steps and components
+  of a more elaborate multi-host deployment together
