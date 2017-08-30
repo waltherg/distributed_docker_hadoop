@@ -33,6 +33,12 @@ reload the virtual environment and check again:
     $ source deactivate
     $ source activate distributed_docker_hadoop
 
+## Build Docker image
+
+To build the Docker image our Hadoop components will run on:
+
+    $ docker-compose build
+
 ## Start cluster
 
 To start up the cluster:
