@@ -63,7 +63,7 @@ play around with scaling out by using the ability of Docker to scale up Docker s
 Bring up the Hadoop cluster as described above.
 Browse the current list of data nodes by visiting the web interface of the name node:
 
-`http://localhost:50070/dfshealth.html#tab-datanode`
+[http://localhost:50070/dfshealth.html#tab-datanode](http://localhost:50070/dfshealth.html#tab-datanode)
 
 You should see a single data like so:
 
